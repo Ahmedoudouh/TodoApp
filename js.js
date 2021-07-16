@@ -1,48 +1,34 @@
 let theInput = document.querySelector(".add-task input");
-let theAddButton = document.querySelector(".add-task .plus");
-let tasksContainer = document.querySelector(".tasks-content");
-let tasksCount = document.querySelector(".tasks-count span");
-let tasksCompleted = document.querySelector(".tasks-completed span");
-const removeList = document.querySelector('.deletall');
-// Focus On Input Field
+let theAddButton = document.querySelector(".add-task ");
+let ulList = document.querySelector(".tasks-content")
+    // Focus On Input Field
 window.onload = function() {
     theInput.focus();
 };
 
 // Adding The Task
 theAddButton.onclick = function() {
+    if (theInput.value != '') {
+        //
+        let mainSpan = document.createElement("li");
+        mainSpan.className = 'task-box';
+        //
+        let deleteElement = document.createElement("input");
+        deleteElement.setAttribute('type', 'radio')
+        mainSpan.append(deleteElement);
+        //
+        deleteElement.className = "delete";
+        //
+        let inputadd = document.querySelector(".input-text");
+        //
+        let span = document.createElement('span')
+        span.className = "item"
+        span.textContent = inputadd.value
+        mainSpan.append(span);
+        //
+        ulList.prepend(mainSpan);
 
-
-    // Create Main Span Element
-    let mainSpan = document.createElement("span");
-
-    // Create Delete Button
-    let deleteElement = document.createElement("input");
-    deleteElement.setAttribute("type", "radio")
-
-    // Create The Main Span Text
-    let text = document.createTextNode(theInput.value);
-
-    // Create The Delete Button Text
-    let deleteText = document.createTextNode("Delete");
-
-    // Add Text To Main Span
-    mainSpan.appendChild(text);
-
-    // Add Class To Main Span
-    mainSpan.className = 'task-box';
-
-    // Add Text To Delete Button
-    deleteElement.appendChild(deleteText);
-
-    // Add Class To Delete Button
-    deleteElement.className = 'delete';
-
-    // Add Delete Button To Main Span
-    mainSpan.prepend(deleteElement);
-    // Add The Task To The Container
-    tasksContainer.appendChild(mainSpan);
-
+    }
     // Empty The Input
     theInput.value = '';
     //
@@ -50,7 +36,7 @@ theAddButton.onclick = function() {
 
 };
 
-
+let background = document.querySelector('.backgroud-2')
 document.addEventListener('click', function(e) {
 
     // Delete Task
@@ -58,10 +44,38 @@ document.addEventListener('click', function(e) {
 
         // Remove Current Task
         e.target.parentNode.remove();
-
     }
 })
 
 // date
 
 document.getElementById("date").innerHTML = new Date().toLocaleString();
+
+// search
+
+const search = document.querySelector(".input")
+    //get input
+let list = document.querySelector(".tasks-content")
+    //get list 
+
+search.addEventListener('keyup', function(e) {
+    // attach value to let
+    let inputSearching = e.target.value;
+    // get li 
+    let liOful = list.querySelectorAll('li');
+    // list of dom to array js
+    let arrayJs = Array.from(liOful)
+        // loop over each il
+    arrayJs.forEach(function(liOful) {
+        let them = liOful.lastElementChild.textContent;
+        if (them.indexOf(inputSearching) != -1) {
+            liOful.style.display = "block"
+        } else {
+            liOful.style.display = "none"
+
+
+        }
+
+    })
+
+});
