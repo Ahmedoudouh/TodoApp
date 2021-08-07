@@ -1,63 +1,74 @@
 let theInput = document.querySelector(".add-task input");
-let theAddButton = document.querySelector(".add-task ");
+let theAddButton = document.querySelector(".plus");
 let ulList = document.querySelector(".tasks-content")
-    // Focus On Input Field
-window.onload = function() {
-    theInput.focus();
+let inputadd = document.querySelector(".input-text");
+///////////////////////////////////////////// date ///////////////////////////////////////////////////////////
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+var today = new Date();
+var dd = String(today.getDate());
+var mm = String(months[today.getMonth()]);
+var yyyy = today.getFullYear();
+today = dd + 'th ' + mm + ', ' + yyyy;
+
+let date = document.getElementById("date").innerHTML = today;
+
+///////////////////////////////////////////////////// disabled //////////////////////////////////////
+inputadd.onclick = function() {
+    theAddButton.disabled = false;
+};
+//////////////////////////////////////////////////// Adding The Task ////////////////////////////////////////
+//
+let addContent = () => {
+    // createElement"li" and createclassname "task-box"
+    let itemAdd = document.createElement("li");
+    itemAdd.className = 'task-box';
+    ulList.prepend(itemAdd);
+    //createElement "input" and Attribute "radio"
+    let inputRadio = document.createElement("input");
+    inputRadio.setAttribute('type', 'radio')
+        // add input in  itemAdd last
+    inputRadio.className = "delete";
+    itemAdd.append(inputRadio);
+
+    let span = document.createElement('span')
+    span.className = "item";
+    itemAdd.append(span);
 };
 
-// Adding The Task
 theAddButton.onclick = function() {
-    if (theInput.value != '') {
+    if (inputadd.value !== "") {
+        addContent()
+        let spanItemAdd = document.querySelector('.item')
+        spanItemAdd.textContent = inputadd.value;
         //
-        let mainSpan = document.createElement("li");
-        mainSpan.className = 'task-box';
-        //
-        let deleteElement = document.createElement("input");
-        deleteElement.setAttribute('type', 'radio')
-        mainSpan.append(deleteElement);
-        //
-        deleteElement.className = "delete";
-        //
-        let inputadd = document.querySelector(".input-text");
-        //
-        let span = document.createElement('span')
-        span.className = "item"
-        span.textContent = inputadd.value
-        mainSpan.append(span);
-        //
-        ulList.prepend(mainSpan);
-
+        saveToLocal(inputadd.value);
     }
     // Empty The Input
-    theInput.value = '';
+    inputadd.value = '';
     //
+    theAddButton.disabled = true;
+}
+document.addEventListener('DOMContentLoaded', getFromLocal())
+
+//////////////////////////////////////////////// Delete Task ////////////////////////////////////////////////////
 
 
-};
-
-let background = document.querySelector('.backgroud-2')
-document.addEventListener('click', function(e) {
-
-    // Delete Task
-    if (e.target.className == 'delete') {
-
-        // Remove Current Task
-        e.target.parentNode.remove();
+ulList.addEventListener('click', function(event) {
+    if (event.target.className == 'delete') {
+        if (confirm("Are you sure you want to delete")) {
+            // delete it!
+            let itemRemoved = event.target.parentNode.remove();
+            removeFromLocal(itemRemoved)
+        }
     }
 })
 
-// date
-
-document.getElementById("date").innerHTML = new Date().toLocaleString();
-
-// search
+///////////////////////////////////////////////// search  ////////////////////////////////////////////////////
 
 const search = document.querySelector(".input")
     //get input
 let list = document.querySelector(".tasks-content")
     //get list 
-
 search.addEventListener('keyup', function(e) {
     // attach value to let
     let inputSearching = e.target.value;
@@ -67,15 +78,68 @@ search.addEventListener('keyup', function(e) {
     let arrayJs = Array.from(liOful)
         // loop over each il
     arrayJs.forEach(function(liOful) {
-        let them = liOful.lastElementChild.textContent;
-        if (them.indexOf(inputSearching) != -1) {
+        let contentItem = liOful.lastElementChild.textContent;
+        if (contentItem.includes(inputSearching)) {
             liOful.style.display = "block"
         } else {
             liOful.style.display = "none"
-
-
         }
 
     })
 
 });
+/////////////////////////////////////////////////////////////////  local storage  //////////////////////////////////////////////////////
+function saveToLocal(item) {
+    let boxLocal = [];
+    boxLocal = JSON.parse(localStorage.getItem('Local'));
+    boxLocal.push(item);
+    localStorage.setItem('Local', JSON.stringify(boxLocal));
+};
+//
+function getFromLocal() {
+    oldBox = JSON.parse(localStorage.getItem('Local'));
+    if (oldBox !== null) {
+        oldBox.map(item => {
+            addContent()
+            let spanItemAdd = document.querySelector('.item')
+            spanItemAdd.textContent = item;
+        })
+    }
+
+}
+
+//////////////////////////////////////////////////////
+
+function removeFromLocal(item) {
+    oldBox = JSON.parse(localStorage.getItem('Local'));
+    oldBox.splice(oldBox.indexOf(item), 1)
+    localStorage.removeItem('Local');
+    localStorage.setItem('Local', JSON.stringify(oldBox));
+
+};
+
+
+
+
+/*
+function saveToLocal(item) {
+    localStorage.setItem('LocalOfString', item);
+};
+//
+function getFromLocal() {
+    let itemA = localStorage.getItem('LocalOfString');
+    if (itemA !== null) {
+
+        addContent()
+        let spanItemAdd = document.querySelector('.item')
+        spanItemAdd.textContent = itemA;
+
+    }
+
+}
+
+function removeFromLocal() {
+
+    localStorage.removeItem('LocalOfString')
+}
+*/

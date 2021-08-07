@@ -15,7 +15,7 @@
     }
     
     .background {
-        padding: 0 45px;
+        padding: 0 199px 0 70px;
         background-image: url(images/background.png);
         background-size: cover;
     }
@@ -61,7 +61,7 @@
         font-weight: 600;
         font-size: 62px;
         line-height: 76px;
-        padding: 180px 0 32px;
+        padding: 120px 0 32px;
     }
     
     .small-paragraph {
@@ -87,7 +87,7 @@
     }
     
     .part-1 {
-        padding: 12px 0 92px;
+        padding-top: 52px;
         flex: 2;
     }
     
@@ -95,7 +95,7 @@
         column-gap: 82px;
         display: flex;
         justify-content: space-between;
-        padding: 0 15px;
+        padding-bottom: 80px;
     }
     
     .search-1 {
@@ -161,8 +161,8 @@
     }
     
     .background-2 {
-        background-color: #ffffff;
-        height: fit-content;
+        height: 500px;
+        overflow: auto;
     }
     
     .la-date {
@@ -212,10 +212,12 @@
         align-items: center;
         gap: 10px;
         margin: 15px;
+        box-shadow: 0px 4px 14px rgba(119, 187, 238, 0.25);
     }
     
     .tasks-content {
         display: grid;
+        background: #ffffff;
     }
     
     .input-text {
@@ -227,12 +229,14 @@
     }
     
     .plus {
-        color: #ffffff;
         font-style: normal;
         font-weight: 400;
         font-size: 17px;
         line-height: 21px;
-        padding: 7px;
+        padding: 9px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
     }
     
     .date {
@@ -241,7 +245,6 @@
     
     .group-search {
         display: flex;
-        column-gap: 10px;
         border: none;
         background: none;
     }
@@ -272,6 +275,15 @@
         line-height: 27px;
     }
     
-    .positsion {
-        margin: 10px 0 20px;
+    .position {
+        margin: 9px 0 18px;
+        font-family: 'Quicksand', sans-serif;
+    }
+    
+    .item {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 19px;
+        color: #3A3A3A;
     }
