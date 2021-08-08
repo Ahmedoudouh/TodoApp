@@ -54,12 +54,15 @@ document.addEventListener('DOMContentLoaded', getFromLocal())
 
 
 ulList.addEventListener('click', function(event) {
+    // if element .className = delete remove
     if (event.target.className == 'delete') {
         if (confirm("Are you sure you want to delete")) {
             // delete it!
             let itemRemoved = event.target.parentNode.remove();
             removeFromLocal(itemRemoved)
-        }
+        } else
+        // disactive type radio
+            event.target.checked = false
     }
 })
 
@@ -89,31 +92,26 @@ search.addEventListener('keyup', function(e) {
 
 });
 /////////////////////////////////////////////////////////////////  local storage  //////////////////////////////////////////////////////
-function saveToLocal(item) {
+function saveToLocal(value) {
     let boxLocal = [];
-    boxLocal = JSON.parse(localStorage.getItem('Local'));
-    boxLocal.push(item);
+    boxLocal.push(value);
     localStorage.setItem('Local', JSON.stringify(boxLocal));
 };
-//
+//////////////////////////////////////////////////////
 function getFromLocal() {
     oldBox = JSON.parse(localStorage.getItem('Local'));
-    if (oldBox !== null) {
-        oldBox.map(item => {
-            addContent()
-            let spanItemAdd = document.querySelector('.item')
-            spanItemAdd.textContent = item;
-        })
-    }
-
+    oldBox.map(item => {
+        addContent()
+        let spanItemAdd = document.querySelector('.item')
+        spanItemAdd.textContent = item;
+    })
 }
 
 //////////////////////////////////////////////////////
 
-function removeFromLocal(item) {
+function removeFromLocal(x) {
     oldBox = JSON.parse(localStorage.getItem('Local'));
-    oldBox.splice(oldBox.indexOf(item), 1)
-    localStorage.removeItem('Local');
+    oldBox.splice(oldBox.indexOf(x), 1)
     localStorage.setItem('Local', JSON.stringify(oldBox));
 
 };
