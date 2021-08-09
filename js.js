@@ -13,9 +13,12 @@ today = dd + 'th ' + mm + ', ' + yyyy;
 let date = document.getElementById("date").innerHTML = today;
 
 ///////////////////////////////////////////////////// disabled //////////////////////////////////////
-inputadd.onclick = function() {
-    theAddButton.disabled = false;
-};
+inputadd.addEventListener('keyup', function(e) {
+    if (e.target.value !== "") {
+        theAddButton.disabled = false;
+    }
+
+});
 //////////////////////////////////////////////////// Adding The Task ////////////////////////////////////////
 //
 let addContent = () => {
@@ -93,7 +96,11 @@ search.addEventListener('keyup', function(e) {
 });
 /////////////////////////////////////////////////////////////////  local storage  //////////////////////////////////////////////////////
 function saveToLocal(value) {
-    let boxLocal = [];
+    if (JSON.parse(localStorage.getItem('Local')) == null) {
+        var boxLocal = [];
+    } else {
+        boxLocal = JSON.parse(localStorage.getItem('Local'))
+    }
     boxLocal.push(value);
     localStorage.setItem('Local', JSON.stringify(boxLocal));
 };
