@@ -15,9 +15,6 @@ today = dd + 'th ' + mm + ', ' + yyyy;
 let date = document.getElementById("date").innerHTML = today;
 
 var arrayTasks = [];
-let d = arrayTasks.map((item) => {
-    item = { id: Date.now() }
-})
 getFromLocal()
 
 // render
@@ -112,3 +109,9 @@ function removeFromLocal(x) {
     oldBox.splice(oldBox.indexOf(x.id), 1)
     localStorage.setItem('Local', JSON.stringify(oldBox));
 };
+/*function removeFromLocal(x) {
+    oldBox = JSON.parse(localStorage.getItem('Local'));
+    oldBox.splice(oldBox.indexOf(x), 1)
+    localStorage.setItem('Local', JSON.stringify(oldBox));
+
+};*/
